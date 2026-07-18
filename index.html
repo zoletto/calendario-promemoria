@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendario promemoria</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f6e56">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  :root{
+    --bg:#f6f5f1; --card:#ffffff; --border:#e2e0d8; --text:#2c2c2a; --muted:#5f5e5a;
+    --accent:#0f6e56; --accent-light:#e1f5ee; --danger:#993c1d;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg); color:var(--text); padding:1rem; padding-bottom:3rem;
+  }
+  h1{font-size:20px; font-weight:600; margin:0.5rem 0 1rem;}
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:1rem; margin-bottom:1rem;
+  }
+  label{display:block; font-size:13px; color:var(--muted); margin-bottom:4px; margin-top:12px;}
+  label:first-of-type{margin-top:0}
+  input, select{
+    width:100%; padding:10px; border:1px solid var(--border); border-radius:8px;
+    font-size:15px; background:#fafaf8;
+  }
+  .contact-row{display:flex; gap:8px; align-items:center;}
+  .contact-row input{flex:1}
+  button{
+    border:none; border-radius:8px; padding:11px 14px; font-size:15px; font-weight:600;
+    cursor:pointer;
+  }
+  .btn-pick{background:var(--accent-light); color:var(--accent); white-space:nowrap;}
+  .btn-primary{background:var(--accent); color:#fff; width:100%; margin-top:16px;}
+  .btn-wa{background:#e1f5ee; color:#0f6e56; width:100%; margin-top:8px; text-align:center; text-decoration:none; display:block;}
+  .appt{
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:12px 14px; margin-bottom:10px;
+  }
+  .appt .name{font-weight:600; font-size:15px; margin:0;}
+  .appt .when{font-size:13px; color:var(--muted); margin:2px 0 10px;}
+  .empty{color:var(--muted); font-size:14px; text-align:center; padding:2rem 0;}
+  .note{font-size:12px; color:var(--muted); margin-top:8px; line-height:1.5;}
+  .del{background:none; color:var(--danger); font-size:13px; padding:4px 0; float:right;}
+</style>
+</head>
+<body>
+
+<h1>Calendario promemoria</h1>
+
+<div id="remindersBox" class="card" style="display:none; background:#fff8e6; border-color:#e8d9a8;"></div>
+
+<div class="card">
+  <label>Contatto</label>
+  <div class="contact-row">
+    <input id="contactName" placeholder="Nome">
+    <button class="btn-pick" id="pickBtn" type="button">Rubrica</button>
+  </div>
+  <input id="contactPhone" placeholder="Numero (es. +39...)" style="margin-top:8px;">
+  <p id="phoneWarning" style="display:none; font-size:12px; color:var(--danger); margin:6px 0 0;">Manca il prefisso internazionale: aggiungi +39 davanti al numero.</p>
+
+  <label>Data</label>
+  <input type="date" id="apptDate">
+
+  <label>Ora</label>
+  <input type="time" id="apptTime">
+
+  <button class="btn-primary" id="addBtn" type="button">Aggiungi appuntamento</button>
+  <p class="note" id="pickerNote"></p>
+</div>
+
+<div id="list"></div>
+<p class="empty" id="emptyMsg">Nessun appuntamento ancora.</p>
+
+<script src="app.js"></script>
+</body>
+</html>
