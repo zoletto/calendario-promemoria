@@ -3,108 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario Promemoria Counseling</title>
+    <title>Gestione Appuntamenti Counseling</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <style>
-        :root {
-            --primary: #4a90e2;
-            --success: #27ae60;
-            --bg: #f4f7f6;
-            --card-bg: #ffffff;
-            --text: #333333;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 16px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        h1, h2 {
-            color: #2c3e50;
-            font-size: 1.4rem;
-        }
-        .card {
-            background: var(--card-bg);
-            padding: 16px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 16px;
-        }
-        button, .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 8px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            box-sizing: border-box;
-        }
-        button.whatsapp {
-            background-color: #25d366;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            margin-bottom: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-        .reminder-item {
-            background: #e8f8f5;
-            border-left: 4px solid var(--success);
-            padding: 10px;
-            margin-bottom: 8px;
-            border-radius: 4px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Calendario & Promemoria</h1>
-
-        <!-- Stato Google Calendar -->
-        <div class="card">
-            <button id="auth-gcal" onclick="handleAuthClick()">Collega Google Calendar</button>
-            <p id="gcal-status" style="font-size: 0.85rem; color: #666; margin-top: 6px;">Stato: Non collegato</p>
-        </div>
-
-        <!-- Sezione Promemoria WhatsApp per Domani -->
-        <div class="card">
-            <h2>🔔 Promemoria da inviare oggi (per domani)</h2>
-            <div id="reminders-list">
-                <p style="color: #7f8c8d; font-size: 0.9rem;">Nessun promemoria in attesa per domani.</p>
+        <h2>Nuovo Appuntamento</h2>
+        
+        <form id="appointment-form">
+            <div class="form-group">
+                <label for="client-name">Nome:</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <input type="text" id="client-name" required style="flex: 1; padding: 8px; font-size: 16px;">
+                    <button type="button" id="btn-contacts" style="padding: 0 12px; background-color: #6200ee; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">📇 Rubrica</button>
+                </div>
             </div>
-        </div>
 
-        <!-- Inserimento Appuntamento -->
-        <div class="card">
-            <h2>Nuovo Appuntamento</h2>
-            <form id="appointment-form">
-                <label for="client-name">Nome Cliente:</label>
-                <input type="text" id="client-name" required placeholder="Es. Mario Rossi">
+            <div class="form-group">
+                <label for="client-phone">Telefono:</label>
+                <input type="tel" id="client-phone" required style="width: 100%; padding: 8px; font-size: 16px; margin-bottom: 10px;">
+            </div>
 
-                <label for="client-phone">Numero Telefono (+39...):</label>
-                <input type="tel" id="client-phone" required placeholder="Es. 3331234567">
-
+            <div class="form-group">
                 <label for="appointment-date">Data e Ora:</label>
-                <input type="datetime-local" id="appointment-date" required>
+                <input type="datetime-local" id="appointment-date" required style="width: 100%; padding: 8px; font-size: 16px; margin-bottom: 15px;">
+            </div>
 
-                <button type="submit">Salva e Sincronizza</button>
-            </form>
-        </div>
+            <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; background-color: #03dac6; color: black; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Salva e Sincronizza</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
     </div>
 
     <script src="app.js"></script>
