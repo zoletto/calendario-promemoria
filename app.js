@@ -19,20 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
             datiForm.append('datetime', datetime);
             datiForm.append('note', 'Counseling');
 
-            // Disattiva il pulsante per evitare doppi invii
             const btn = form.querySelector('button[type="submit"]');
             btn.textContent = "Salvataggio in corso...";
             btn.disabled = true;
 
             try {
-                // Invia i dati al Foglio Google aggirando il blocco CORS
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     body: datiForm
                 });
 
-                alert(`Appuntamento salvato con successo sul Foglio Google per ${name}!`);
+                alert(`Appuntamento salvato con successo per ${name}!`);
                 form.reset();
             } catch (error) {
                 console.error("Errore durante il salvataggio:", error);
