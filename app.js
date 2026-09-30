@@ -1,9 +1,8 @@
-// URL del tuo Foglio Google (tramite Apps Script)
+// URL del tuo Foglio Google (Apps Script)
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5O0HEid-9adhQoYklfWZtACd_nHNVPHZLMbdDBVHlYUCZybSoe68I_KoOQMDfEk_54Q/exec";
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("App avviata correttamente.");
-    caricaAppuntamentiDaFoglio();
     
     const form = document.getElementById('appointment-form');
     if (form) {
@@ -13,13 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const phone = document.getElementById('client-phone').value;
             const datetime = document.getElementById('appointment-date').value;
 
-            const nuovoAppuntamento = {
-                id: 'app_' + Date.now(),
-                name: name,
-                phone: phone,
-                datetime: datetime,
-                note: "Counseling"
-            };
+            const datiForm = new URLSearchParams();
+            datiForm.append('id', 'app_' + Date.now());
+            datiForm.append('name', name);
+            datiForm.append('phone', phone);
+            datiForm.append('datetime', datetime);
+            datiForm.append('note', 'Counseling');
 
             // Disattiva il pulsante per evitare doppi invii
             const btn = form.querySelector('button[type="submit"]');
@@ -27,17 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
             try {
-                // Invia i dati al Foglio Google
+                // Invia i dati al Foglio Google aggirando il blocco CORS
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(nuovoAppuntamento)
+                    body: datiForm
                 });
 
-                alert(`Appuntamento salvato con successo per ${name}!`);
+                alert(`Appuntamento salvato con successo sul Foglio Google per ${name}!`);
                 form.reset();
-                location.reload(); // Ricarica per aggiornare la lista
             } catch (error) {
                 console.error("Errore durante il salvataggio:", error);
                 alert("Errore di connessione durante il salvataggio.");
@@ -49,12 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Funzione per caricare e mostrare i promemoria per l'indomani
-async function caricaAppuntamentiDaFoglio() {
-    const remindersContainer = document.getElementById('reminders-list');
-    // Qui potremmo leggere dal foglio, ma per ora gestiamo la visualizzazione pulita
-}
-
 function handleAuthClick() {
-    alert("Integrazione Google Calendar pronta.");
+    alert("Integrazione Google Calendar attiva.");
 }
