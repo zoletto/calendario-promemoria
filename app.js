@@ -4,6 +4,40 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5O0HEid-9adhQoYklf
 document.addEventListener('DOMContentLoaded', () => {
     console.log("App avviata correttamente.");
     
+    // Gestione pulsante Rubrica
+    const btnContacts = document.getElementById('btn-contacts');
+    if (btnContacts) {
+        // Verifica se il browser supporta la selezione contatti
+        if ('contacts' in navigator && 'Picker' in window) {
+            btnContacts.style.display = 'inline-block';
+        } else {
+            // Se il browser (es. alcuni iPhone/Safari) non supporta l'API diretta, nascondiamo o adattiamo il pulsante
+            // Nota: su Android Chrome funziona alla perfezione.
+        }
+
+        btnContacts.addEventListener('click', async () => {
+            const supportedProperties = ['name', 'tel'];
+            const options = { multiple: false };
+
+            try {
+                const contacts = await navigator.contacts.select(supportedProperties, options);
+                if (contacts && contacts.length > 0) {
+                    const contact = contacts[0];
+                    
+                    if (contact.name && contact.name[0]) {
+                        document.getElementById('client-name').value = contact.name[0];
+                    }
+                    if (contact.tel && contact.tel[0]) {
+                        document.getElementById('client-phone').value = contact.tel[0];
+                    }
+                }
+            } catch (ex) {
+                console.error('Selezione contatti annullata o non supportata:', ex);
+                alert("Impossibile accedere alla rubrica da questo browser. Inserisci i dati manualmente.");
+            }
+        });
+    }
+
     const form = document.getElementById('appointment-form');
     if (form) {
         form.addEventListener('submit', async (e) => {
@@ -41,6 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+});
+
+function handleAuthClick() {
+    alert("Integrazione Google Calendar attiva.");
+}
 });
 
 function handleAuthClick() {
